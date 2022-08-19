@@ -18,7 +18,8 @@ void UFG_BaseState::Tick_Implementation(float DeltaTime)
 void UFG_BaseState::Enter_Implementation()
 {
 	//TODO: Add that you bind to a list of axis and actions when entering the state, 
-	//TODO: or just do that you override this and add that yourself, it can always be prettier.
+	//TODO: or just do that you override this and add that yourself like I'm doing now, it can always be prettier.
+	
 	if (GetFGCharacter()->ButtonInputBuffer != EButtonInput::NONE)
 	{
 		GEngine->AddOnScreenDebugMessage(

@@ -72,6 +72,15 @@ void AFG_BaseCharacter::HandleJumpInput()
 	
 }
 
+void AFG_BaseCharacter::Test()
+{
+	GEngine->AddOnScreenDebugMessage(
+		INDEX_NONE,
+		1.0f,
+		FColor::Blue,
+		FString::Printf(TEXT("Test"))); //Printf returns a string
+}
+
 void AFG_BaseCharacter::OnButtonInput(EButtonInput Input)
 {
 	GEngine->AddOnScreenDebugMessage(

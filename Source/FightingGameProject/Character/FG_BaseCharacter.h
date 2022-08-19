@@ -65,6 +65,8 @@ private:
 
 	void HandleJumpInput();
 
+	void Test();
+
 public: //Public Variables
 
 	//Editor Exposed Variables

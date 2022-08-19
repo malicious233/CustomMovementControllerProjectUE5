@@ -90,31 +90,37 @@ void UFG_InputBinderComponent::EmptyAxisBindings(UInputComponent& InputComp)
 		}
 		
 	}
-	RememberedAxisBindings.Empty();
+	//RememberedAxisBindings.Empty();
 }
 
 void UFG_InputBinderComponent::EmptyActionBindings(UInputComponent& InputComp)
 {
 	//Loops through all axis remembered axis bindings
-	for (int32 i = 0; i < RememberedActionBindings.Num(); ++i)
+	for (int i = 0; i < RememberedActionBindings.Num(); ++i)
 	{
 		//Then loops through all the axis bindings in the input component.
 		//TODO: Question whether or not InputComp should be reference type... is there too much copying going on here?
-		for (int32 b = 0; b < InputComp.GetNumActionBindings(); ++b)
+		for (int b = 0; b < InputComp.GetNumActionBindings(); ++b)
 		{
 
 			//If they are the same, remove that binding and keep on iterating
 			FInputActionBinding binding = InputComp.GetActionBinding(b);
 			if (CompareInputActionBindings(binding, RememberedActionBindings[i]))
 			{
+				GEngine->AddOnScreenDebugMessage(
+					INDEX_NONE,
+					1.0f,
+					FColor::Blue,
+					FString::Printf(TEXT("Removed an Action bind!"))); //Printf returns a string
 				InputComp.RemoveActionBinding(b);
+				
 				b--;
 				continue;
 			}
 		}
 		
 	}
-	RememberedActionBindings.Empty();
+	//RememberedActionBindings.Empty();
 }
 
 void UFG_InputBinderComponent::EmptyBindings(UInputComponent& InputComponent)

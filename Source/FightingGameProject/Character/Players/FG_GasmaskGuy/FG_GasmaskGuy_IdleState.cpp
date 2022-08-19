@@ -12,6 +12,8 @@ void UFG_GasmaskGuy_IdleState::Enter_Implementation()
 	AFG_GasmaskGuy* G = GetOwner(); //I am lazy
 	FInputActionBinding bind = GetOwner()->InputComponent->BindAction(TEXT("Jump"), IE_Pressed, GetOwner(), &AFG_GasmaskGuy::Ping);
 	GetOwner()->InputBinderComp->AddActionBinding(bind);
+	//This seems to be getting flushed by the InputBinder on exit, which is not intended!
+
 	
 	//TODO:Binding on entering a state might not be a good idea, as the InputComponent will be null if the player isnt possessed.
 	//TODO:

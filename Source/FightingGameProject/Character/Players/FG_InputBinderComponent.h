@@ -34,6 +34,7 @@ public: //Public Functions
 
 	/**
 	 * @brief Binds an Axis to a state which gets cleared when exiting state. If InputComponent is null it wont go through
+	 * //DOESNT WORK ATM
 	 * @tparam UserClass 
 	 * @param AxisName 
 	 * @param EventType 
@@ -45,6 +46,7 @@ public: //Public Functions
 
 	/**
 	 * @brief Binds an Action to a state which gets cleared when exiting state. If InputComponent is null it wont go through
+	 * //DOESNT WORK ATM
 	 * @tparam UserClass 
 	 * @param AxisName 
 	 * @param EventType 
@@ -53,6 +55,7 @@ public: //Public Functions
 	template<class UserClass>
 	void BindActionToState(FName ActionName, EInputEvent EventType, FInputActionHandlerSignature::TMethodPtr<UserClass> Func);
 	//TODO: Do that the behavior for when you call this function when InputComponent is null is correct
+	
 	
 	/**
 	 * @brief Remembers axis, clears when EmptyAxisBindings is called.
