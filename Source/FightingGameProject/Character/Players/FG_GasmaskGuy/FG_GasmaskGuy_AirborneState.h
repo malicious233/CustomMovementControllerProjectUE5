@@ -17,5 +17,7 @@ class FIGHTINGGAMEPROJECT_API UFG_GasmaskGuy_AirborneState : public UFG_GasmaskG
 {
 	GENERATED_BODY()
 
+	
+	
 	void Tick_Implementation(float DeltaTime) override;
 };

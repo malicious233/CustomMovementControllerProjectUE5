@@ -3,6 +3,7 @@
 #pragma once
 
 #include "CoreMinimal.h"
+#include "FightingGameProject/Character/FG_Action.h"
 #include "UObject/Object.h"
 #include "FG_BaseState.generated.h"
 
@@ -35,7 +36,8 @@ public: //Public Functions
 	UFUNCTION(BlueprintNativeEvent)
 	void Exit();
 
-	//TODO: Add an array of Actions which you subscribe to when you enter any state.
+	
+	TArray<UFG_Action*> PossibleActions; //List of actions you can do in this state.
 
 	UFUNCTION(BlueprintCallable)
 	AFG_BaseCharacter* GetFGCharacter();

@@ -2,7 +2,7 @@
 
 
 #include "FG_BaseCharacter.h"
-
+#include "Players/FG_BaseState.h"
 
 
 // Sets default values
@@ -90,4 +90,13 @@ void AFG_BaseCharacter::OnButtonInput(EButtonInput Input)
 		FString::Printf(TEXT("Input: h"))); //Printf returns a string
 	CurrentButtonBufferDuration = BufferDuration;
 	ButtonInputBuffer = Input;
+
+	for (UFG_Action* Action: (GetState()->PossibleActions))
+	{
+		if (Action->ButtonInput == Input)
+		{
+			Action->Delegate.Execute();
+			break;
+		}
+	}
 }

@@ -6,9 +6,10 @@
 #include "FG_CharacterMovementComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/Pawn.h"
-#include "Players/FG_BaseState.h"
 #include "Players/FG_InputBinderComponent.h"
 #include "FG_BaseCharacter.generated.h"
+
+class UFG_BaseState;
 
 UENUM(BlueprintType)
 enum class EButtonInput : uint8

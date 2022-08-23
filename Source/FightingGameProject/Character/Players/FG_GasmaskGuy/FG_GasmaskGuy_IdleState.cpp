@@ -5,13 +5,28 @@
 
 #include "FG_GasmaskGuy.h"
 
+UFG_GasmaskGuy_IdleState::UFG_GasmaskGuy_IdleState()
+{
+	
+	//PossibleActions.Add(Action);
+	
+
+}
+
 void UFG_GasmaskGuy_IdleState::Enter_Implementation()
 {
 	Super::Enter_Implementation();
 
-	AFG_GasmaskGuy* G = GetOwner(); //I am lazy
-	FInputActionBinding bind = GetOwner()->InputComponent->BindAction(TEXT("Jump"), IE_Pressed, GetOwner(), &AFG_GasmaskGuy::Ping);
-	GetOwner()->InputBinderComp->AddActionBinding(bind);
+	FSimpleDelegate PtrFunc;
+	PtrFunc.BindUObject(GetOwner()->MoveComp, &UFG_CharacterMovementComponent::Jump);
+	UFG_Action* Action = NewObject<UFG_Action>();
+	Action->ButtonInput = EButtonInput::JUMP;
+	Action->Delegate = PtrFunc;
+	PossibleActions.Add(Action);
+	
+	//AFG_GasmaskGuy* G = GetOwner(); //I am lazy
+	//FInputActionBinding bind = GetOwner()->InputComponent->BindAction(TEXT("Jump"), IE_Pressed, GetOwner(), &AFG_GasmaskGuy::Ping);
+	//GetOwner()->InputBinderComp->AddActionBinding(bind);
 	//This seems to be getting flushed by the InputBinder on exit, which is not intended!
 
 	

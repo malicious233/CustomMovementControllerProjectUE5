@@ -19,6 +19,15 @@ void UFG_BaseState::Enter_Implementation()
 {
 	//TODO: Add that you bind to a list of axis and actions when entering the state, 
 	//TODO: or just do that you override this and add that yourself like I'm doing now, it can always be prettier.
+
+	for (UFG_Action* Action: (PossibleActions))
+	{
+		if (Action->ButtonInput == GetFGCharacter()->ButtonInputBuffer)
+		{
+			Action->Delegate.Execute();
+			break;
+		}
+	}
 	
 	if (GetFGCharacter()->ButtonInputBuffer != EButtonInput::NONE)
 	{
@@ -35,8 +44,7 @@ void UFG_BaseState::Enter_Implementation()
 void UFG_BaseState::Exit_Implementation()
 {
 	//Always flush the bound Inputs when exiting the state, which we do here.
-	GetFGCharacter()->InputBinderComp->EmptyBindings(*(GetFGCharacter()->InputComponent));
-	
+	//GetFGCharacter()->InputBinderComp->EmptyBindings(*(GetFGCharacter()->InputComponent));
 }
 
 

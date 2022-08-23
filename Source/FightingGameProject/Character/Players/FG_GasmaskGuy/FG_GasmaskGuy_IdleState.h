@@ -16,6 +16,8 @@ class FIGHTINGGAMEPROJECT_API UFG_GasmaskGuy_IdleState : public UFG_GasmaskGuy_B
 {
 	GENERATED_BODY()
 
+	UFG_GasmaskGuy_IdleState();
+	
 	void Enter_Implementation() override;
 	
 	void Tick_Implementation(float DeltaTime) override;
