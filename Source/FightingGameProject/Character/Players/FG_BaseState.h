@@ -40,7 +40,19 @@ public: //Public Functions
 	TArray<UFG_Action*> PossibleActions; //List of actions you can do in this state.
 
 	UFUNCTION(BlueprintCallable)
-	AFG_BaseCharacter* GetFGCharacter();
+	inline AFG_BaseCharacter* GetFGCharacter();
+
+	
+	template<typename T>
+	void RegisterButtonAction(EButtonInput Button, T* ThisClass, void(T::*Func)(void))
+	{
+		FSimpleDelegate PtrFunc;
+		PtrFunc.BindUObject(ThisClass, Func);
+		UFG_Action* Action = NewObject<UFG_Action>();
+		Action->ButtonInput = Button;
+		Action->Delegate = PtrFunc;
+		PossibleActions.Add(Action);
+	}
 	
 private: //Private Functions
 	

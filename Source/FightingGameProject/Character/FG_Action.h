@@ -21,7 +21,7 @@ public:
 	UPROPERTY()
 	EButtonInput ButtonInput;
 	
-	FSimpleDelegate Delegate;
+	FSimpleDelegate Delegate; //Is this being garbage collected?
 
 public:
 };

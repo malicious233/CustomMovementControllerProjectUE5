@@ -53,3 +53,5 @@ AFG_BaseCharacter* UFG_BaseState::GetFGCharacter()
 {
 	return OwnerFGCharacter;
 }
+
+

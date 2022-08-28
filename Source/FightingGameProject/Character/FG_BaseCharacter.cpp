@@ -53,7 +53,7 @@ UFG_BaseState* AFG_BaseCharacter::GetState()
 	return ActiveState;
 }
 
-void AFG_BaseCharacter::HandleHorizontalInput(float Axis)
+void AFG_BaseCharacter::HandleHorizontalInput(const float Axis)
 {
 	if (Axis != 0)
 	{
@@ -62,7 +62,7 @@ void AFG_BaseCharacter::HandleHorizontalInput(float Axis)
 	
 }
 
-void AFG_BaseCharacter::HandleVerticalInput(float Axis)
+void AFG_BaseCharacter::HandleVerticalInput(const float Axis)
 {
 }
 
@@ -81,7 +81,10 @@ void AFG_BaseCharacter::Test()
 		FString::Printf(TEXT("Test"))); //Printf returns a string
 }
 
-void AFG_BaseCharacter::OnButtonInput(EButtonInput Input)
+
+
+
+void AFG_BaseCharacter::OnButtonInput(const EButtonInput Input)
 {
 	GEngine->AddOnScreenDebugMessage(
 		INDEX_NONE,

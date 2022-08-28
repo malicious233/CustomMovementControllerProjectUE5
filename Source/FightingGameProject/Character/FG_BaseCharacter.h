@@ -10,6 +10,7 @@
 #include "FG_BaseCharacter.generated.h"
 
 class UFG_BaseState;
+class UserClass;
 
 UENUM(BlueprintType)
 enum class EButtonInput : uint8
@@ -56,18 +57,21 @@ public: //Functions
 
 	//Returns active state
 	UFUNCTION(BlueprintCallable)
-	UFG_BaseState* GetState();
+	inline UFG_BaseState* GetState();
 	
 
 
 private:
-	void HandleHorizontalInput(float Axis);
-	void HandleVerticalInput(float Axis);
+	
+	void HandleHorizontalInput(const float Axis);
+	void HandleVerticalInput(const float Axis);
 
 	void HandleJumpInput();
 
 	void Test();
 
+	
+	
 public: //Public Variables
 
 	//Editor Exposed Variables
@@ -98,7 +102,7 @@ protected: //Protected Stuff
 	 * @brief Call this on any button input. Resets the buffer timer.
 	 */
 	UFUNCTION()
-	void OnButtonInput(EButtonInput InputEnum);
+	void OnButtonInput(const EButtonInput InputEnum);
 
 private: //Private Variables
 

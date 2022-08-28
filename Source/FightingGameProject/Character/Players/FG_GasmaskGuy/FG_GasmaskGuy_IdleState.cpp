@@ -2,7 +2,7 @@
 
 
 #include "FG_GasmaskGuy_IdleState.h"
-
+#include "FightingGameProject/Character/Players/FG_BaseState.h"
 #include "FG_GasmaskGuy.h"
 
 UFG_GasmaskGuy_IdleState::UFG_GasmaskGuy_IdleState()
@@ -17,12 +17,18 @@ void UFG_GasmaskGuy_IdleState::Enter_Implementation()
 {
 	Super::Enter_Implementation();
 
+	/*
 	FSimpleDelegate PtrFunc;
 	PtrFunc.BindUObject(GetOwner()->MoveComp, &UFG_CharacterMovementComponent::Jump);
 	UFG_Action* Action = NewObject<UFG_Action>();
 	Action->ButtonInput = EButtonInput::JUMP;
 	Action->Delegate = PtrFunc;
 	PossibleActions.Add(Action);
+	*/
+	
+	RegisterButtonAction<UFG_CharacterMovementComponent>(EButtonInput::JUMP, GetOwner()->MoveComp, &UFG_CharacterMovementComponent::Jump);
+	
+	//This works but should really be converted into a function
 	
 	//AFG_GasmaskGuy* G = GetOwner(); //I am lazy
 	//FInputActionBinding bind = GetOwner()->InputComponent->BindAction(TEXT("Jump"), IE_Pressed, GetOwner(), &AFG_GasmaskGuy::Ping);
