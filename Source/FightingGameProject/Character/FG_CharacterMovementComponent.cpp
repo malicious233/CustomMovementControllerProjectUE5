@@ -121,7 +121,7 @@ bool UFG_CharacterMovementComponent::CheckGrounded()
 	
 	GetWorld()->SweepSingleByChannel(Hit, ColliderRef->GetComponentLocation(), SweepVector, ColliderRef->GetComponentRotation().Quaternion(),
 		ECollisionChannel::ECC_WorldStatic, Shape, Param);
-	if (Hit.bBlockingHit)
+	if (Hit.bBlockingHit && !(Velocity.Z > 0)) //The velocity check might be redundant here
 	{
 		GEngine->AddOnScreenDebugMessage(
 		INDEX_NONE,

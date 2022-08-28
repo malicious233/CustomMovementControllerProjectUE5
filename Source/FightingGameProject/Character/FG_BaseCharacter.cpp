@@ -53,11 +53,26 @@ UFG_BaseState* AFG_BaseCharacter::GetState()
 	return ActiveState;
 }
 
+float AFG_BaseCharacter::GetHorizontalInput()
+{
+	return HorizontalInput;
+}
+
+float AFG_BaseCharacter::GetVerticalInput()
+{
+	return 0; //hehe
+}
+
 void AFG_BaseCharacter::HandleHorizontalInput(const float Axis)
 {
 	if (Axis != 0)
 	{
-		OnButtonInput(EButtonInput::JUMP);
+		HorizontalInput = Axis;
+	}
+	else
+	{
+
+		HorizontalInput = 0;
 	}
 	
 }

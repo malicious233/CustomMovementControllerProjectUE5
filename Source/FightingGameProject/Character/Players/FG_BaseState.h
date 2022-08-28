@@ -38,11 +38,14 @@ public: //Public Functions
 
 	
 	TArray<UFG_Action*> PossibleActions; //List of actions you can do in this state.
-
-	UFUNCTION(BlueprintCallable)
-	inline AFG_BaseCharacter* GetFGCharacter();
-
 	
+	/**
+	 * @brief Registers a delegate with a button input for this state
+	 * @tparam T 
+	 * @param Button 
+	 * @param ThisClass Class where the function is from
+	 * @param Func 
+	 */
 	template<typename T>
 	void RegisterButtonAction(EButtonInput Button, T* ThisClass, void(T::*Func)(void))
 	{
@@ -53,6 +56,9 @@ public: //Public Functions
 		Action->Delegate = PtrFunc;
 		PossibleActions.Add(Action);
 	}
+
+	UFUNCTION(BlueprintCallable)
+	inline AFG_BaseCharacter* GetFGCharacter();
 	
 private: //Private Functions
 	

@@ -13,6 +13,9 @@ class FIGHTINGGAMEPROJECT_API UFG_InputBinderComponent : public UActorComponent
 	GENERATED_BODY()
 
 	UFG_InputBinderComponent();
+
+	//This component turned out to be redundant and is no longer being used.
+	//So long, space cowboy.
 	
 private: //Private Variables
 	

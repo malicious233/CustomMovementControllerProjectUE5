@@ -3,43 +3,21 @@
 
 #include "FG_GasmaskGuy_IdleState.h"
 #include "FightingGameProject/Character/Players/FG_BaseState.h"
+#include "FG_GasmaskGuy_BaseState.h"
 #include "FG_GasmaskGuy.h"
 
 UFG_GasmaskGuy_IdleState::UFG_GasmaskGuy_IdleState()
 {
-	
-	//PossibleActions.Add(Action);
-	
-
 }
 
 void UFG_GasmaskGuy_IdleState::Enter_Implementation()
 {
 	Super::Enter_Implementation();
 
-	/*
-	FSimpleDelegate PtrFunc;
-	PtrFunc.BindUObject(GetOwner()->MoveComp, &UFG_CharacterMovementComponent::Jump);
-	UFG_Action* Action = NewObject<UFG_Action>();
-	Action->ButtonInput = EButtonInput::JUMP;
-	Action->Delegate = PtrFunc;
-	PossibleActions.Add(Action);
-	*/
-	
-	RegisterButtonAction<UFG_CharacterMovementComponent>(EButtonInput::JUMP, GetOwner()->MoveComp, &UFG_CharacterMovementComponent::Jump);
-	
-	//This works but should really be converted into a function
-	
-	//AFG_GasmaskGuy* G = GetOwner(); //I am lazy
-	//FInputActionBinding bind = GetOwner()->InputComponent->BindAction(TEXT("Jump"), IE_Pressed, GetOwner(), &AFG_GasmaskGuy::Ping);
-	//GetOwner()->InputBinderComp->AddActionBinding(bind);
-	//This seems to be getting flushed by the InputBinder on exit, which is not intended!
-
-	
-	//TODO:Binding on entering a state might not be a good idea, as the InputComponent will be null if the player isnt possessed.
-	//TODO:
-
-	//G->InputBinderComp->BindActionToState(TEXT("Jump"), IE_Pressed, &AFG_GasmaskGuy::Ping));
+	//Registers all the possible actions in this state. The order of which they get subscribed determines the input priority. 
+	//TODO: Do that you have an array of actions which automatically gets registered so that you can configure in the editor
+	//TODO: Caching this once instead of doing it on every state enter would be better. Too bad!
+	RegisterButtonAction<UFG_CharacterMovementComponent>(EButtonInput::JUMP, GetOwner()->MoveComp, &UFG_CharacterMovementComponent::Jump); //This for example registers with the jump button input the jump function from the move component.
 	
 }
 
@@ -52,5 +30,8 @@ void UFG_GasmaskGuy_IdleState::Tick_Implementation(float DeltaTime)
 	{
 		G->SetState(G->AirborneState);
 	}
+
+	const FVector MoveForce = FVector::RightVector * GetOwner()->GetHorizontalInput() * 300.f;
+	GetOwner()->MoveComp->AddForce(MoveForce);
 	
 }

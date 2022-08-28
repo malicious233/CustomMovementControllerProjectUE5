@@ -58,6 +58,12 @@ public: //Functions
 	//Returns active state
 	UFUNCTION(BlueprintCallable)
 	inline UFG_BaseState* GetState();
+
+	UFUNCTION(BlueprintCallable)
+	inline float GetHorizontalInput();
+
+	UFUNCTION(BlueprintCallable)
+	inline float GetVerticalInput();
 	
 
 

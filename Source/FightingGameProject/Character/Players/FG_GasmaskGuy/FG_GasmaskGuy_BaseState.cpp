@@ -16,3 +16,8 @@ AFG_GasmaskGuy* UFG_GasmaskGuy_BaseState::GetOwner()
 {
 	return Owner;
 }
+
+UFG_CharacterMovementComponent* UFG_GasmaskGuy_BaseState::GetMoveComp()
+{
+	return MoveCompRef;
+}

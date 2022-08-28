@@ -21,10 +21,16 @@ class FIGHTINGGAMEPROJECT_API UFG_GasmaskGuy_BaseState : public UFG_BaseState
 private:
 	UPROPERTY()
 	AFG_GasmaskGuy* Owner;
+
+	UPROPERTY()
+	UFG_CharacterMovementComponent* MoveCompRef;
 	
 public:
 	UFG_GasmaskGuy_BaseState();
 	
 	UFUNCTION(BlueprintCallable)
 	AFG_GasmaskGuy* GetOwner();
+
+	UFUNCTION()
+	UFG_CharacterMovementComponent* GetMoveComp();
 };
