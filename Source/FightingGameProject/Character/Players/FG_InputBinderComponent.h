@@ -16,6 +16,10 @@ class FIGHTINGGAMEPROJECT_API UFG_InputBinderComponent : public UActorComponent
 
 	//This component turned out to be redundant and is no longer being used.
 	//So long, space cowboy.
+
+
+
+	//Seriously, leave this component alone
 	
 private: //Private Variables
 	
