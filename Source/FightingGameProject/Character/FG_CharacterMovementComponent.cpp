@@ -42,6 +42,7 @@ void UFG_CharacterMovementComponent::TickComponent(float DeltaTime, ELevelTick T
 		0.0f,
 		FColor::Blue,
 		FString::Printf(TEXT("GROUNDED"))); //Printf returns a string
+		ApplyFriction();
 	}
 	else
 	{
@@ -65,9 +66,11 @@ void UFG_CharacterMovementComponent::TickComponent(float DeltaTime, ELevelTick T
 			}
 			else
 			{
+				
 				Velocity = FVector::VectorPlaneProject(Velocity, Hit.Normal);
 				RemainingTime -= RemainingTime * Hit.Time;
 				//Hit time is percentage travelled before hit
+				
 			}
 		}
 		else
@@ -105,23 +108,34 @@ void UFG_CharacterMovementComponent::Jump()
 	Velocity.Z = JumpForce;
 }
 
+FVector UFG_CharacterMovementComponent::GetVelocity()
+{
+	return Velocity; //watch the master on encapsulation at work
+}
+
 void UFG_CharacterMovementComponent::ApplyGravity()
 {
 	AddForce(FVector::UpVector * Gravity);
+}
+
+void UFG_CharacterMovementComponent::ApplyFriction()
+{
+	FVector FrictionVector = -FVector(FVector(Velocity.X, Velocity.Y, 0) * Friction);
+	AddForce(FrictionVector);
 }
 
 bool UFG_CharacterMovementComponent::CheckGrounded()
 {
 	FHitResult Hit;
 
-	FVector SweepVector = ColliderRef->GetComponentLocation() + FVector::DownVector * 0.1f;
+	FVector SweepVector = ColliderRef->GetComponentLocation() + FVector::DownVector * 0.5f;
 	FCollisionShape Shape = FCollisionShape::MakeCapsule(ColliderRef->GetScaledCapsuleRadius(), ColliderRef->GetScaledCapsuleHalfHeight());
 	FCollisionQueryParams Param;
 	Param.AddIgnoredActor(GetOwner());
 	
 	GetWorld()->SweepSingleByChannel(Hit, ColliderRef->GetComponentLocation(), SweepVector, ColliderRef->GetComponentRotation().Quaternion(),
 		ECollisionChannel::ECC_WorldStatic, Shape, Param);
-	if (Hit.bBlockingHit && !(Velocity.Z > 0)) //The velocity check might be redundant here
+	if (Hit.bBlockingHit) //Check if the Z velocity check was neccessary
 	{
 		GEngine->AddOnScreenDebugMessage(
 		INDEX_NONE,

@@ -30,6 +30,8 @@ public:
 	
 	UFUNCTION(BlueprintCallable)
 	AFG_GasmaskGuy* GetOwner();
+	
+	void HiThere();
 
 	UFUNCTION()
 	UFG_CharacterMovementComponent* GetMoveComp();

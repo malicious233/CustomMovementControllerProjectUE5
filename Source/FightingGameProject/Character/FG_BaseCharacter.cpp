@@ -45,6 +45,7 @@ void AFG_BaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
 	InputComponent->BindAction(FName("Jump"), IE_Pressed, this, &AFG_BaseCharacter::HandleJumpInput);
 	InputComponent->BindAxis(FName("Horizontal"), this, &AFG_BaseCharacter::HandleHorizontalInput);
+	InputComponent->BindAxis(FName("Vertical"), this, &AFG_BaseCharacter::HandleVerticalInput);
 	
 }
 
@@ -60,7 +61,7 @@ float AFG_BaseCharacter::GetHorizontalInput()
 
 float AFG_BaseCharacter::GetVerticalInput()
 {
-	return 0; //hehe
+	return VerticalInput;
 }
 
 void AFG_BaseCharacter::HandleHorizontalInput(const float Axis)
@@ -79,6 +80,15 @@ void AFG_BaseCharacter::HandleHorizontalInput(const float Axis)
 
 void AFG_BaseCharacter::HandleVerticalInput(const float Axis)
 {
+	if (Axis != 0)
+	{
+		VerticalInput = Axis;
+	}
+	else
+	{
+
+		VerticalInput = 0;
+	}
 }
 
 void AFG_BaseCharacter::HandleJumpInput()
@@ -113,7 +123,7 @@ void AFG_BaseCharacter::OnButtonInput(const EButtonInput Input)
 	{
 		if (Action->ButtonInput == Input)
 		{
-			Action->Delegate.Execute();
+			Action->Delegate.ExecuteIfBound();
 			break;
 		}
 	}

@@ -21,7 +21,7 @@ void UFG_BaseState::Enter_Implementation()
 	{
 		if (Action->ButtonInput == GetFGCharacter()->ButtonInputBuffer)
 		{
-			Action->Delegate.Execute();
+			Action->Delegate.ExecuteIfBound();
 			break;
 		}
 	}

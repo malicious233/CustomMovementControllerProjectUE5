@@ -36,7 +36,7 @@ public: //Public Functions
 	UFUNCTION(BlueprintNativeEvent)
 	void Exit();
 
-	
+	UPROPERTY()
 	TArray<UFG_Action*> PossibleActions; //List of actions you can do in this state.
 	
 	/**
@@ -47,7 +47,7 @@ public: //Public Functions
 	 * @param Func 
 	 */
 	template<typename T>
-	void RegisterButtonAction(EButtonInput Button, T* ThisClass, void(T::*Func)(void))
+	void RegisterButtonAction(EButtonInput Button, T* ThisClass, void(T::*Func)())
 	{
 		FSimpleDelegate PtrFunc;
 		PtrFunc.BindUObject(ThisClass, Func);

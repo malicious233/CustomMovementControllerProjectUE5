@@ -45,8 +45,13 @@ public: //Public Functions
 	UFUNCTION(BlueprintCallable)
 	void Jump();
 
+	UFUNCTION(BlueprintCallable)
+	FVector GetVelocity();
+
 private: //Private Functions
 	void ApplyGravity();
+
+	void ApplyFriction();
 
 	bool CheckGrounded();
 	
@@ -65,6 +70,9 @@ public: //Public variables
 
 	UPROPERTY(EditAnywhere)
 	float JumpForce = 600.f;
+
+	UPROPERTY(EditAnywhere)
+	float Friction = 60.f;
 
 	UCapsuleComponent* ColliderRef;
 };
