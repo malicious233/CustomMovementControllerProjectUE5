@@ -57,7 +57,7 @@ public: //Public Functions
 		PossibleActions.Add(Action);
 	}
 
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintPure)
 	inline AFG_BaseCharacter* GetFGCharacter();
 	
 private: //Private Functions

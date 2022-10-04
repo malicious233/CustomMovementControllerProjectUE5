@@ -45,7 +45,7 @@ public: //Public Functions
 	UFUNCTION(BlueprintCallable)
 	void Jump();
 
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintPure)
 	FVector GetVelocity();
 
 private: //Private Functions

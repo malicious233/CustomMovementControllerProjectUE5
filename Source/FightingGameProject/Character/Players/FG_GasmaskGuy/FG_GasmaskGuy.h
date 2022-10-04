@@ -27,6 +27,7 @@ public: //Overrides
 
 public: //Functions
 
+	UFUNCTION(BlueprintCallable)
 	void SetState(UFG_BaseState* ToState);
 	
 	//Ugly debug functions

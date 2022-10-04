@@ -28,11 +28,11 @@ private:
 public:
 	UFG_GasmaskGuy_BaseState();
 	
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintPure)
 	AFG_GasmaskGuy* GetOwner();
 	
 	void HiThere();
 
-	UFUNCTION()
+	UFUNCTION(BlueprintPure)
 	UFG_CharacterMovementComponent* GetMoveComp();
 };

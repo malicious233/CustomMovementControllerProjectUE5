@@ -11,11 +11,19 @@ AFG_BaseCharacter::AFG_BaseCharacter()
 	// Set this pawn to call Tick() every frame.  You can turn this off to improve performance if you don't need it.
 	PrimaryActorTick.bCanEverTick = true;
 
-	Collider = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Collider"));
+	ColliderComp = CreateDefaultSubobject<UCapsuleComponent>(TEXT("Collider"));
+	RootComponent = ColliderComp;
+	
 	MoveComp = CreateDefaultSubobject<UFG_CharacterMovementComponent>(TEXT("MovementComponent"));
-	MoveComp->ColliderRef = Collider;
+	MoveComp->ColliderRef = ColliderComp;
+	
 	InputBinderComp = CreateDefaultSubobject<UFG_InputBinderComponent>(TEXT("InputBinderComponent"));
 	
+	CameraSpringArmComp = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraSpringArmComponent"));
+	CameraSpringArmComp->SetupAttachment(RootComponent);
+	
+	CameraComp = CreateDefaultSubobject<UCameraComponent>(TEXT("CameraComponent"));
+	CameraComp->SetupAttachment(CameraSpringArmComp);
 }
 
 // Called when the game starts or when spawned

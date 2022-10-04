@@ -4,8 +4,10 @@
 
 #include "CoreMinimal.h"
 #include "FG_CharacterMovementComponent.h"
+#include "Camera/CameraComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/Pawn.h"
+#include "GameFramework/SpringArmComponent.h"
 #include "Players/FG_InputBinderComponent.h"
 #include "FG_BaseCharacter.generated.h"
 
@@ -56,13 +58,13 @@ public: //Public Overrides
 public: //Functions
 
 	//Returns active state
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintPure)
 	inline UFG_BaseState* GetState();
 
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintPure)
 	inline float GetHorizontalInput();
 
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintPure)
 	inline float GetVerticalInput();
 	
 
@@ -80,20 +82,29 @@ private:
 	
 public: //Public Variables
 
+	
+	
+	
 	//Editor Exposed Variables
 	UPROPERTY(EditAnywhere)
 	float BufferDuration = 0.2f;
 	
 	//Components
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(BlueprintReadOnly,VisibleAnywhere)
 	UFG_CharacterMovementComponent* MoveComp;
 
-	UPROPERTY(VisibleAnywhere)
+	UPROPERTY(BlueprintReadOnly,VisibleAnywhere)
 	UFG_InputBinderComponent* InputBinderComp;
 
-	UPROPERTY(VisibleAnywhere)
-	UCapsuleComponent* Collider;
+	UPROPERTY(BlueprintReadOnly,VisibleAnywhere)
+	UCapsuleComponent* ColliderComp;
 
+	UPROPERTY(BlueprintReadOnly,VisibleAnywhere)
+	USpringArmComponent* CameraSpringArmComp;
+
+	UPROPERTY(BlueprintReadOnly,VisibleAnywhere)
+	UCameraComponent* CameraComp;
+	
 	//Values
 	TArray<EButtonInput> ButtonInputBufferArray; //List of the order of button inputs. Will be relevant for the command input thing
 
