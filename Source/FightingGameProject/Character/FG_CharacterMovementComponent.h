@@ -28,20 +28,25 @@ public: //Public Functions
 
 	//Physics Functions
 	
-	
 	UFUNCTION(BlueprintCallable)
 	void AddForce(const FVector& Force);
 
 	UFUNCTION(BlueprintCallable)
 	void AddImpulse(const FVector& Impulse);
 
+	
+
 	UFUNCTION(BlueprintCallable)
 	bool IsGrounded();
 
 	//Character Functions
+	
 	UFUNCTION(BlueprintCallable)
 	void HandleWalk(const float Axis);
 
+	UFUNCTION(BlueprintCallable)
+	void RotateCharacter(const float Angle, const float RotationSpeed);
+	
 	UFUNCTION(BlueprintCallable)
 	void Jump();
 

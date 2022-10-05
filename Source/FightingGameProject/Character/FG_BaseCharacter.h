@@ -57,18 +57,24 @@ public: //Public Overrides
 
 public: //Functions
 
-	//Returns active state
+	//Gets active state
 	UFUNCTION(BlueprintPure)
 	inline UFG_BaseState* GetState();
+	//TODO: Perhaps with interfaces we can know more info about the BaseState?
 
 	UFUNCTION(BlueprintPure)
 	inline float GetHorizontalInput();
 
 	UFUNCTION(BlueprintPure)
 	inline float GetVerticalInput();
+
+	//Gets normalized input vector, not relative to camera
+	UFUNCTION(BlueprintPure)
+	inline FVector GetInputVector();
+
+	UFUNCTION(BlueprintPure)
+	inline FVector GetCameraInputVector();
 	
-
-
 private:
 	
 	void HandleHorizontalInput(const float Axis);
@@ -125,11 +131,17 @@ private: //Private Variables
 
 	float CurrentButtonBufferDuration = 0;
 	
-	UPROPERTY()
 	float HorizontalInput;
-
-	UPROPERTY()
+	
+	float CameraHorizontalInput;
+	
 	float VerticalInput;
+	
+	float CameraVerticalInput;
+
+	FVector InputVector;
+
+	FVector CameraInputVector;
 };
 
 

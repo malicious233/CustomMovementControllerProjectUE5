@@ -38,12 +38,24 @@ void AFG_BaseCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	//Handle camera relative input
+	FVector CameraFwd0Z = CameraComp->GetForwardVector();
+	CameraFwd0Z.Z = 0;
+
+	FVector CameraRight0Z = -CameraComp->GetRightVector();
+	CameraRight0Z.Z = 0;
+	
+	FVector Rel = (FVector(GetHorizontalInput() * CameraRight0Z + GetVerticalInput() * CameraFwd0Z)).GetSafeNormal();
+	CameraInputVector = Rel;
+
+	//Input Buffer timer
 	CurrentButtonBufferDuration -= DeltaTime;
 	if (CurrentButtonBufferDuration < 0)
 	{
 		ButtonInputBuffer = EButtonInput::NONE;
 	}
-	
+
+	//Actually tick the state
 	ActiveState->Tick(DeltaTime);
 }
 
@@ -72,6 +84,18 @@ float AFG_BaseCharacter::GetVerticalInput()
 	return VerticalInput;
 }
 
+FVector AFG_BaseCharacter::GetInputVector()
+{
+	return InputVector;
+}
+
+FVector AFG_BaseCharacter::GetCameraInputVector()
+{
+	return CameraInputVector;
+}
+
+
+
 void AFG_BaseCharacter::HandleHorizontalInput(const float Axis)
 {
 	if (Axis != 0)
@@ -83,6 +107,7 @@ void AFG_BaseCharacter::HandleHorizontalInput(const float Axis)
 
 		HorizontalInput = 0;
 	}
+	InputVector = FVector(HorizontalInput, VerticalInput, 0).GetSafeNormal();
 	
 }
 
@@ -97,6 +122,8 @@ void AFG_BaseCharacter::HandleVerticalInput(const float Axis)
 
 		VerticalInput = 0;
 	}
+	InputVector = FVector(HorizontalInput, VerticalInput, 0).GetSafeNormal();
+	
 }
 
 void AFG_BaseCharacter::HandleJumpInput()

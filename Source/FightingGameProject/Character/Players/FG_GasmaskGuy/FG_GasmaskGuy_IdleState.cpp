@@ -22,6 +22,7 @@ void UFG_GasmaskGuy_IdleState::Enter_Implementation()
 	//Registers all the possible actions in this state. The order of which they get subscribed determines the input priority. 
 	//TODO: Do that you have an array of actions which automatically gets registered so that you can configure in the editor
 	//TODO: Do that this is done once and cached instead of being called every time on Enter. This being called after the BaseState implementation is also causing some issues.
+	//TODO: See if you can make this be nicely blueprintable.
 	RegisterButtonAction<UFG_CharacterMovementComponent>(EButtonInput::JUMP, GetOwner()->MoveComp, &UFG_CharacterMovementComponent::Jump); //This for example registers with the jump button input the jump function from the move component.
 	
 }
@@ -36,10 +37,15 @@ void UFG_GasmaskGuy_IdleState::Tick_Implementation(float DeltaTime)
 		G->SetState(G->AirborneState);
 	}
 
-	FVector MoveForce = FVector::RightVector * GetOwner()->GetHorizontalInput() * 300;
-	MoveForce = FVector(GetOwner()->GetHorizontalInput() * 900, GetOwner()->GetVerticalInput() * 900, 0);
+	//Rotate
+	if (GetOwner()->GetCameraInputVector().Rotation() != FRotator::ZeroRotator)
+	{
+		GetOwner()->MoveComp->RotateCharacter(GetOwner()->GetCameraInputVector().Rotation().Yaw, 200.f);
+	}
 	
-	
+
+	//Add move force
+	FVector MoveForce = GetOwner()->GetCameraInputVector() * GetOwner()->WalkSpeed;
 	GetOwner()->MoveComp->AddForce(MoveForce);
 	
 }

@@ -27,6 +27,9 @@ public: //Overrides
 
 public: //Functions
 
+	UPROPERTY(EditAnywhere)
+	float WalkSpeed = 1500.f;
+	
 	UFUNCTION(BlueprintCallable)
 	void SetState(UFG_BaseState* ToState);
 	

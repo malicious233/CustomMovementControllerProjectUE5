@@ -103,6 +103,17 @@ void UFG_CharacterMovementComponent::HandleWalk(float Axis)
 	FVector WalkVelocityDelta = FVector::RightVector * Axis * WalkSpeed;
 }
 
+void UFG_CharacterMovementComponent::RotateCharacter(const float Angle, const float RotationSpeed)
+{
+	//FRotator PlayerRot = GetOwner()->GetActorForwardVector().Rotation();
+	//FRotator ToRot = FRotator::ZeroRotator;
+	//ToRot.Yaw = Angle;
+	//FRotator NewRot = (PlayerRot.Quaternion().Slerp(PlayerRot.Quaternion(), ToRot.Quaternion(), RotationSpeed)).Rotator();
+	FRotator NewRot = GetOwner()->GetActorRotation();
+	NewRot.Yaw = Angle;
+	GetOwner()->SetActorRotation(NewRot);
+}
+
 void UFG_CharacterMovementComponent::Jump()
 {
 	Velocity.Z = JumpForce;
