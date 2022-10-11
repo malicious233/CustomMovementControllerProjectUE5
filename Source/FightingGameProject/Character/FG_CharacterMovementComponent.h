@@ -44,8 +44,16 @@ public: //Public Functions
 	UFUNCTION(BlueprintCallable)
 	void HandleWalk(const float Axis);
 
+	/**
+	 * @brief Lerps characters Yaw
+	 * @param Direction 
+	 * @param RotationSpeed 
+	 */
 	UFUNCTION(BlueprintCallable)
-	void RotateCharacter(const float Angle, const float RotationSpeed);
+	void RotateCharacter(FVector Direction, const float RotationSpeed);
+
+	UFUNCTION(BlueprintPure)
+	float GetTurningDelta();
 	
 	UFUNCTION(BlueprintCallable)
 	void Jump();
@@ -64,6 +72,9 @@ private: //Private variables
 	FVector Velocity = FVector::ZeroVector;
 
 	bool bIsGrounded;
+
+	float PreviousYaw;
+	float TurnDelta;
 	
 	
 public: //Public variables

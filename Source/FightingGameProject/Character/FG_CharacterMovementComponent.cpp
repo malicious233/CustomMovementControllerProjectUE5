@@ -33,7 +33,7 @@ void UFG_CharacterMovementComponent::TickComponent(float DeltaTime, ELevelTick T
 
 	AActor* Owner = GetOwner();
 
-	
+	//Handle Ground Check
 	if (CheckGrounded())
 	{
 		//Velocity.Z = 0;
@@ -79,6 +79,9 @@ void UFG_CharacterMovementComponent::TickComponent(float DeltaTime, ELevelTick T
 		}
 	}
 
+	//Handle Turning delta
+	TurnDelta = PreviousYaw - GetOwner()->GetActorRotation().Yaw;
+	PreviousYaw = GetOwner()->GetActorRotation().Yaw;
 	
 }
 
@@ -103,15 +106,21 @@ void UFG_CharacterMovementComponent::HandleWalk(float Axis)
 	FVector WalkVelocityDelta = FVector::RightVector * Axis * WalkSpeed;
 }
 
-void UFG_CharacterMovementComponent::RotateCharacter(const float Angle, const float RotationSpeed)
+void UFG_CharacterMovementComponent::RotateCharacter(FVector Direction, const float RotationSpeed)
 {
-	//FRotator PlayerRot = GetOwner()->GetActorForwardVector().Rotation();
-	//FRotator ToRot = FRotator::ZeroRotator;
-	//ToRot.Yaw = Angle;
-	//FRotator NewRot = (PlayerRot.Quaternion().Slerp(PlayerRot.Quaternion(), ToRot.Quaternion(), RotationSpeed)).Rotator();
-	FRotator NewRot = GetOwner()->GetActorRotation();
-	NewRot.Yaw = Angle;
+	Direction.Z = 0;
+	Direction.Normalize();
+	
+	FRotator OldRot = GetOwner()->GetActorRotation();
+	FRotator NewRot = Direction.Rotation();
+	NewRot = FMath::Lerp(OldRot, NewRot, RotationSpeed);
+	
 	GetOwner()->SetActorRotation(NewRot);
+}
+
+float UFG_CharacterMovementComponent::GetTurningDelta()
+{
+	return TurnDelta;
 }
 
 void UFG_CharacterMovementComponent::Jump()
@@ -121,7 +130,7 @@ void UFG_CharacterMovementComponent::Jump()
 
 FVector UFG_CharacterMovementComponent::GetVelocity()
 {
-	return Velocity; //watch the master on encapsulation at work
+	return Velocity; //watch the master of encapsulation at work
 }
 
 void UFG_CharacterMovementComponent::ApplyGravity()
