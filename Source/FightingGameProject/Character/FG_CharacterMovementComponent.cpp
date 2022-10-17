@@ -140,7 +140,7 @@ void UFG_CharacterMovementComponent::ApplyGravity()
 
 void UFG_CharacterMovementComponent::ApplyFriction()
 {
-	FVector FrictionVector = -FVector(FVector(Velocity.X, Velocity.Y, 0) * Friction);
+	FVector FrictionVector = -FVector(FVector(Velocity.X, Velocity.Y, 0) * Friction) * GetWorld()->GetDeltaSeconds();
 	AddForce(FrictionVector);
 }
 
