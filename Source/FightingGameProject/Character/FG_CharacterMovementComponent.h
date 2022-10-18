@@ -34,12 +34,13 @@ public: //Public Functions
 	UFUNCTION(BlueprintCallable)
 	void AddImpulse(const FVector& Impulse);
 
-	
-
-	UFUNCTION(BlueprintCallable)
+	UFUNCTION(BlueprintPure)
 	bool IsGrounded();
 
 	//Character Functions
+
+	UFUNCTION(BlueprintCallable)
+	void Walk(FVector Direction, const float Acceleration, const float MaxWalkSpeed);
 	
 	UFUNCTION(BlueprintCallable)
 	void HandleWalk(const float Axis);
@@ -60,6 +61,11 @@ public: //Public Functions
 
 	UFUNCTION(BlueprintPure)
 	FVector GetVelocity();
+
+	//Events
+	UFUNCTION(BlueprintNativeEvent)
+	void OnLanded();
+
 
 private: //Private Functions
 	void ApplyGravity();

@@ -13,5 +13,7 @@ void UFG_GasmaskGuy_AirborneState::Tick_Implementation(float DeltaTime)
 	{
 		G->SetState(G->IdleState);
 	}
-	
+
+	//Add a reduced move force
+	GetOwner()->MoveComp->Walk(GetOwner()->GetCameraInputVector(), GetOwner()->WalkSpeed * 0.4f, GetOwner()->MaxWalkSpeed);
 }

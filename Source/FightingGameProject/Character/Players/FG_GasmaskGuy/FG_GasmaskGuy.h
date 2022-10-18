@@ -29,6 +29,9 @@ public: //Functions
 
 	UPROPERTY(EditAnywhere)
 	float WalkSpeed = 1500.f;
+
+	UPROPERTY(EditAnywhere)
+	float MaxWalkSpeed = 700.f;
 	
 	UFUNCTION(BlueprintCallable)
 	void SetState(UFG_BaseState* ToState);

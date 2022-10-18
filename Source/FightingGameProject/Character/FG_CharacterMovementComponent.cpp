@@ -3,6 +3,8 @@
 
 #include "FG_CharacterMovementComponent.h"
 
+#include "FightingGameProject/MyMath.h"
+
 
 // Sets default values for this component's properties
 UFG_CharacterMovementComponent::UFG_CharacterMovementComponent()
@@ -36,7 +38,6 @@ void UFG_CharacterMovementComponent::TickComponent(float DeltaTime, ELevelTick T
 	//Handle Ground Check
 	if (CheckGrounded())
 	{
-		//Velocity.Z = 0;
 		GEngine->AddOnScreenDebugMessage(
 		INDEX_NONE,
 		0.0f,
@@ -101,14 +102,57 @@ bool UFG_CharacterMovementComponent::IsGrounded()
 	return bIsGrounded;
 }
 
+void UFG_CharacterMovementComponent::Walk(FVector Direction, const float Acceleration, const float MaxWalkSpeed)
+{
+	Direction.Normalize();
+
+	FVector AccelToAdd = Direction * Acceleration;
+	FVector GroundVelocity = FMyMath::ZeroZVector(GetVelocity());
+
+	float AccelGroundDot = FVector::DotProduct(AccelToAdd, GroundVelocity.GetSafeNormal());
+	if (AccelGroundDot <= 0)
+	{
+		//If it's below zero it will not add more velocity, so reduce the factor to 0.
+		AccelGroundDot = 0;
+	}
+
+	//I still wish I had a better name for this value
+	FVector AccelFactor = AccelGroundDot * GroundVelocity.GetSafeNormal();
+
+	if (GroundVelocity.Size() > MaxWalkSpeed)
+	{
+		//When moving too fast, it will subtract the correct amount to not overshoot the MaxWalkSpeed
+		AccelToAdd = AccelToAdd - AccelFactor;
+	}
+
+	//Projects the acceltoAdd onto the current plane to more smoothly follow along surfaces
+	FHitResult Hit;
+	FVector SweepVector = ColliderRef->GetComponentLocation() + FVector::DownVector * 0.5f;
+	FCollisionShape Shape = FCollisionShape::MakeCapsule(ColliderRef->GetScaledCapsuleRadius(), ColliderRef->GetScaledCapsuleHalfHeight());
+	FCollisionQueryParams Param;
+	Param.AddIgnoredActor(GetOwner());
+	
+	GetWorld()->SweepSingleByChannel(Hit, ColliderRef->GetComponentLocation(), SweepVector, ColliderRef->GetComponentRotation().Quaternion(),
+		ECollisionChannel::ECC_WorldStatic, Shape, Param);
+
+	if (AccelToAdd.Z > 1)
+	{
+		AccelToAdd = AccelToAdd.VectorPlaneProject(AccelToAdd, Hit.Normal);
+	}
+	
+
+	AddForce(AccelToAdd);
+}
+
 void UFG_CharacterMovementComponent::HandleWalk(float Axis)
 {
 	FVector WalkVelocityDelta = FVector::RightVector * Axis * WalkSpeed;
 }
 
+
 void UFG_CharacterMovementComponent::RotateCharacter(FVector Direction, const float RotationSpeed)
 {
-	Direction.Z = 0;
+	Direction = FMyMath::ZeroZVector(Direction);
 	Direction.Normalize();
 	
 	FRotator OldRot = GetOwner()->GetActorRotation();
@@ -133,6 +177,11 @@ FVector UFG_CharacterMovementComponent::GetVelocity()
 	return Velocity; //watch the master of encapsulation at work
 }
 
+void UFG_CharacterMovementComponent::OnLanded_Implementation()
+{
+	
+}
+
 void UFG_CharacterMovementComponent::ApplyGravity()
 {
 	AddForce(FVector::UpVector * Gravity);
@@ -140,9 +189,13 @@ void UFG_CharacterMovementComponent::ApplyGravity()
 
 void UFG_CharacterMovementComponent::ApplyFriction()
 {
-	FVector FrictionVector = -FVector(FVector(Velocity.X, Velocity.Y, 0) * Friction) * GetWorld()->GetDeltaSeconds();
-	AddForce(FrictionVector);
+	FVector GroundVelocity = FMyMath::ZeroZVector(Velocity);
+	FVector DeaccelVector = FMyMath::MoveTowards(GroundVelocity, FVector::Zero(), Friction * GetWorld()->DeltaTimeSeconds);
+	DeaccelVector.Z = Velocity.Z;
+
+	Velocity = DeaccelVector;
 }
+
 
 bool UFG_CharacterMovementComponent::CheckGrounded()
 {
@@ -157,11 +210,10 @@ bool UFG_CharacterMovementComponent::CheckGrounded()
 		ECollisionChannel::ECC_WorldStatic, Shape, Param);
 	if (Hit.bBlockingHit) //Check if the Z velocity check was neccessary
 	{
-		GEngine->AddOnScreenDebugMessage(
-		INDEX_NONE,
-		0.0f,
-		FColor::Blue,
-		FString::Printf(TEXT("Hit: %s"), *Hit.GetActor()->GetName())); //Printf returns a string
+		if (!bIsGrounded)
+		{
+			OnLanded_Implementation();
+		}
 		bIsGrounded = true;
 		return true;
 	}
