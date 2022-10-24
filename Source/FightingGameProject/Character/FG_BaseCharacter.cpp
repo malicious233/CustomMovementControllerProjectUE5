@@ -18,6 +18,9 @@ AFG_BaseCharacter::AFG_BaseCharacter()
 	MoveComp->ColliderRef = ColliderComp;
 	
 	InputBinderComp = CreateDefaultSubobject<UFG_InputBinderComponent>(TEXT("InputBinderComponent"));
+
+	SkeletalMeshComp = CreateDefaultSubobject<USkeletalMeshComponent>(TEXT("SkeletalMeshComponent"));
+	
 	
 	CameraSpringArmComp = CreateDefaultSubobject<USpringArmComponent>(TEXT("CameraSpringArmComponent"));
 	CameraSpringArmComp->SetupAttachment(RootComponent);
@@ -37,7 +40,8 @@ void AFG_BaseCharacter::BeginPlay()
 void AFG_BaseCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
-
+	RootSomething = SkeletalMeshComp->RootBoneTranslation;
+	
 	//Handle camera relative input
 	FVector CameraFwd0Z = CameraComp->GetForwardVector();
 	CameraFwd0Z.Z = 0;
@@ -72,6 +76,11 @@ void AFG_BaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputCo
 UFG_BaseState* AFG_BaseCharacter::GetState()
 {
 	return ActiveState;
+}
+
+FVector AFG_BaseCharacter::GetRootSomething()
+{
+	return RootSomething;
 }
 
 float AFG_BaseCharacter::GetHorizontalInput()

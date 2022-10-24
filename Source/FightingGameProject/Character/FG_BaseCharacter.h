@@ -63,6 +63,9 @@ public: //Functions
 	//TODO: Perhaps with interfaces we can know more info about the BaseState?
 
 	UFUNCTION(BlueprintPure)
+	FVector GetRootSomething();
+	
+	UFUNCTION(BlueprintPure)
 	inline float GetHorizontalInput();
 
 	UFUNCTION(BlueprintPure)
@@ -105,11 +108,17 @@ public: //Public Variables
 	UPROPERTY(BlueprintReadOnly,VisibleAnywhere)
 	UCapsuleComponent* ColliderComp;
 
+	UPROPERTY(BlueprintReadOnly, VisibleAnywhere)
+	USkeletalMeshComponent* SkeletalMeshComp;
+
 	UPROPERTY(BlueprintReadOnly,VisibleAnywhere)
 	USpringArmComponent* CameraSpringArmComp;
 
 	UPROPERTY(BlueprintReadOnly,VisibleAnywhere)
 	UCameraComponent* CameraComp;
+
+	UPROPERTY()
+	FVector RootSomething;
 	
 	//Values
 	TArray<EButtonInput> ButtonInputBufferArray; //List of the order of button inputs. Will be relevant for the command input thing
