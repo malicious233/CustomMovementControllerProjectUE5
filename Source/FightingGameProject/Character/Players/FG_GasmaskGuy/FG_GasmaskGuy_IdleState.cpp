@@ -40,7 +40,7 @@ void UFG_GasmaskGuy_IdleState::Tick_Implementation(float DeltaTime)
 	//Rotate
 	if (GetOwner()->GetCameraInputVector().Rotation() != FRotator::ZeroRotator)
 	{
-		GetOwner()->MoveComp->RotateCharacter(GetOwner()->MoveComp->GetVelocity().GetSafeNormal(), 0.1f);
+		GetOwner()->MoveComp->RotateCharacter(GetOwner()->MoveComp->GetVelocity().GetSafeNormal(), 30 * DeltaTime);
 	}
 	
 	//Add move force

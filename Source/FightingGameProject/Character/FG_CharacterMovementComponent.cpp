@@ -35,21 +35,6 @@ void UFG_CharacterMovementComponent::TickComponent(float DeltaTime, ELevelTick T
 
 	AActor* Owner = GetOwner();
 
-	//Handle Ground Check
-	if (CheckGrounded())
-	{
-		GEngine->AddOnScreenDebugMessage(
-		INDEX_NONE,
-		0.0f,
-		FColor::Blue,
-		FString::Printf(TEXT("GROUNDED"))); //Printf returns a string
-		ApplyFriction();
-	}
-	else
-	{
-		ApplyGravity();
-	}
-
 	//Collision and handle depenetration
 	int Iterations = 10;
 	float RemainingTime = DeltaTime;
@@ -83,6 +68,44 @@ void UFG_CharacterMovementComponent::TickComponent(float DeltaTime, ELevelTick T
 	//Handle Turning delta
 	TurnDelta = PreviousYaw - GetOwner()->GetActorRotation().Yaw;
 	PreviousYaw = GetOwner()->GetActorRotation().Yaw;
+
+	//Handle floating and ground check
+	//The player hovers a few units above the floor with a single ray that is being casted down.
+	//This means that the capsule colliders height doesn't exactly represent the actual height of the player
+	FloatingDetectionDisabledTimer -= DeltaTime;
+	if (FloatingDetectionDisabledTimer < 0)
+	{
+		FVector Start = GetOwner()->GetActorLocation();
+		FVector End = Start + FVector::DownVector * FloatRayDistance;
+
+		FHitResult Hit;
+		FCollisionQueryParams Param;
+		Param.AddIgnoredActor(GetOwner());
+	
+		if (GetWorld()->LineTraceSingleByChannel(Hit, Start, End, ECC_WorldStatic, Param))
+		{
+			bIsGrounded = true;
+			Velocity.Z = 0;
+			float Height = FMath::FInterpTo(Start.Z, Hit.Location.Z + FloatHeight, DeltaTime, 15.f);
+			FVector ToVector = Start;
+			ToVector.Z = Height;
+			GetOwner()->SetActorLocation(ToVector);
+			ApplyFriction();
+		}
+		else
+		{
+			bIsGrounded = false;
+			ApplyGravity();
+		}
+	}
+	else
+	{
+		ApplyGravity();
+	}
+	
+	
+
+	
 	
 }
 
@@ -94,6 +117,10 @@ void UFG_CharacterMovementComponent::AddForce(const FVector& Force)
 
 void UFG_CharacterMovementComponent::AddImpulse(const FVector& Impulse)
 {
+	if (Impulse.Z != 0)
+	{
+		FloatingDetectionDisabledTimer = 0.1;
+	}
 	Velocity += Impulse;
 }
 
@@ -169,6 +196,7 @@ float UFG_CharacterMovementComponent::GetTurningDelta()
 
 void UFG_CharacterMovementComponent::Jump()
 {
+	FloatingDetectionDisabledTimer = 0.3; //Briefly disabled the ground detection and hovering as not to immediately snap back to the floor
 	Velocity.Z = JumpForce;
 }
 
@@ -199,6 +227,7 @@ void UFG_CharacterMovementComponent::ApplyFriction()
 
 bool UFG_CharacterMovementComponent::CheckGrounded()
 {
+	/*
 	FHitResult Hit;
 
 	FVector SweepVector = ColliderRef->GetComponentLocation() + FVector::DownVector * 0.5f;
@@ -218,6 +247,8 @@ bool UFG_CharacterMovementComponent::CheckGrounded()
 		return true;
 	}
 	bIsGrounded = false;
+	return false;
+	*/
 	return false;
 }
 

@@ -81,6 +81,8 @@ private: //Private variables
 
 	float PreviousYaw;
 	float TurnDelta;
+
+	float FloatingDetectionDisabledTimer; //How long is the ground detection and hovering disabled. Used when jumping
 	
 	
 public: //Public variables
@@ -95,6 +97,12 @@ public: //Public variables
 
 	UPROPERTY(EditAnywhere)
 	float Friction = 60.f;
+
+	UPROPERTY(EditAnywhere)
+	float FloatHeight = 60.f; //The height of which you hover above the floor. Needed for object clearance and following inclined slopes. 
+
+	UPROPERTY(EditAnywhere)
+	float FloatRayDistance = 65.f; //The distance to check for floor to snap onto. Keep this a bit longer than the FloatHeight to more smoothly follow slopes
 
 	UCapsuleComponent* ColliderRef;
 };

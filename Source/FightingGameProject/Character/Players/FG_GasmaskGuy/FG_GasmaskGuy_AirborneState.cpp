@@ -14,6 +14,11 @@ void UFG_GasmaskGuy_AirborneState::Tick_Implementation(float DeltaTime)
 		G->SetState(G->IdleState);
 	}
 
+	if (GetOwner()->GetCameraInputVector().Rotation() != FRotator::ZeroRotator)
+	{
+		GetOwner()->MoveComp->RotateCharacter(GetOwner()->MoveComp->GetVelocity().GetSafeNormal(), 10 * DeltaTime);
+	}
+
 	//Add a reduced move force
 	GetOwner()->MoveComp->Walk(GetOwner()->GetCameraInputVector(), GetOwner()->WalkSpeed * 0.4f, GetOwner()->MaxWalkSpeed);
 }
