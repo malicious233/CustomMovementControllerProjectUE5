@@ -9,6 +9,8 @@ This provides a layer of abstraction for when you want to make new characters, m
 -The finite statemachine behavior works in tandem with the input buffer, as whenever you enter a new state, it will check if you've inputted something since a short duration of time, and then try to perform that input, if possible. 
 This behavior exists on the FG_BaseCharacter itself which means that if a player were to pilot an enemy that inherits from this class, you'll still have the input-buffer system
 
--The custom movement component called FG_CharacterMovementComponent comes with custom collision done by sweeping, a velocity-based movement model with friction, acceleration, rotation, max-speed, etc, stair-stepping/object clearance.
+-The custom movement component called FG_CharacterMovementComponent comes with custom collision done by sweeping, a velocity-based movement model with friction, acceleration, rotation, max-speed, etc, and smooth stair-stepping/object clearance.
+
+-The animations is done entirely through an animation blueprint which reads values from FG_gasmaskguy and listens to events to play montages. The animator blueprint has walking, jumping, additive-landing animations, and additive blendspaces for leaning the character spine when accelerating or turning
 
 
