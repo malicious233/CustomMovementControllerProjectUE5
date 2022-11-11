@@ -33,7 +33,8 @@ AFG_BaseCharacter::AFG_BaseCharacter()
 void AFG_BaseCharacter::BeginPlay()
 {
 	Super::BeginPlay();
-	
+	//MoveComp->OnJump.AddDynamic(MoveComp, &UFG_CharacterMovementComponent::Jump);
+	//Don't worry, I wanted to try to create an infinite loop for the funny on purpose and it sure worked. I'm leaving it here as a testament to my stupidity
 }
 
 // Called every frame
@@ -63,7 +64,7 @@ void AFG_BaseCharacter::Tick(float DeltaTime)
 	ActiveState->Tick(DeltaTime);
 }
 
-// Called to bind functionality to input
+// Called to bind functionality to input. Dont bind character-specific methods here, let our custom Action system do that to support input buffering
 void AFG_BaseCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 {
 	Super::SetupPlayerInputComponent(PlayerInputComponent);
@@ -81,6 +82,7 @@ UFG_BaseState* AFG_BaseCharacter::GetState()
 FVector AFG_BaseCharacter::GetRootSomething()
 {
 	return RootSomething;
+	//huh?
 }
 
 float AFG_BaseCharacter::GetHorizontalInput()
@@ -143,6 +145,7 @@ void AFG_BaseCharacter::HandleJumpInput()
 
 void AFG_BaseCharacter::Test()
 {
+	
 	GEngine->AddOnScreenDebugMessage(
 		INDEX_NONE,
 		1.0f,
@@ -155,6 +158,7 @@ void AFG_BaseCharacter::Test()
 
 void AFG_BaseCharacter::OnButtonInput(const EButtonInput Input)
 {
+	
 	GEngine->AddOnScreenDebugMessage(
 		INDEX_NONE,
 		1.0f,

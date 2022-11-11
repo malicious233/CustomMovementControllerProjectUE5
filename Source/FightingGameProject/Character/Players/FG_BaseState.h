@@ -40,7 +40,8 @@ public: //Public Functions
 	TArray<UFG_Action*> PossibleActions; //List of actions you can do in this state.
 	
 	/**
-	 * @brief Registers a delegate with a button input for this state
+	 * @brief Registers a delegate with a button input for this state.
+	 * Essentially an equivalent to BindAction but only for a specific state and takes input buffer into consideration!
 	 * @tparam T 
 	 * @param Button 
 	 * @param ThisClass Class where the function is from

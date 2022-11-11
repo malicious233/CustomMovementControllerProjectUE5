@@ -44,8 +44,8 @@ public: //Functions
 public: //States
 	//Idle
 	UPROPERTY(EditDefaultsOnly)
-	TSubclassOf<UFG_BaseState> IdleStateClass;
-
+	TSubclassOf<UFG_BaseState> IdleStateClass; //Just so I can use a BP overridden state
+	
 	UPROPERTY()
 	UFG_BaseState* IdleState;
 	

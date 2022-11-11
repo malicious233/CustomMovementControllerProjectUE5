@@ -100,6 +100,8 @@ void UFG_CharacterMovementComponent::TickComponent(float DeltaTime, ELevelTick T
 	}
 	else
 	{
+		//The trail of logic of this if-else-thing can probably be improved but it works for now
+		bIsGrounded = false;
 		ApplyGravity();
 	}
 	
@@ -191,11 +193,13 @@ void UFG_CharacterMovementComponent::RotateCharacter(FVector Direction, const fl
 
 float UFG_CharacterMovementComponent::GetTurningDelta()
 {
+	
 	return TurnDelta;
 }
 
 void UFG_CharacterMovementComponent::Jump()
 {
+	OnJump.Broadcast();
 	FloatingDetectionDisabledTimer = 0.3; //Briefly disabled the ground detection and hovering as not to immediately snap back to the floor
 	Velocity.Z = JumpForce;
 }

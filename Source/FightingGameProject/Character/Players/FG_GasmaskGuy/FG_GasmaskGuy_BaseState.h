@@ -18,6 +18,7 @@ class FIGHTINGGAMEPROJECT_API UFG_GasmaskGuy_BaseState : public UFG_BaseState
 {
 	GENERATED_BODY()
 
+	//Base state for states made for Gasmaskguy
 private:
 	UPROPERTY()
 	AFG_GasmaskGuy* Owner;

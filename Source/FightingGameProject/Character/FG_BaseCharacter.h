@@ -38,6 +38,11 @@ class FIGHTINGGAMEPROJECT_API AFG_BaseCharacter : public APawn
 {
 	GENERATED_BODY()
 
+	///---------
+	///Custom abstract base character that does not inherit from ACharacter. (At the moment it is only GasmaskGuy that uses this)
+	///Features a custom movement component, a finite statemachine to seperate logic and a system for input buffering actions
+	///---------
+
 public:
 	// Sets default values for this pawn's properties
 	AFG_BaseCharacter();
@@ -60,7 +65,7 @@ public: //Functions
 	//Gets active state
 	UFUNCTION(BlueprintPure)
 	inline UFG_BaseState* GetState();
-	//TODO: Perhaps with interfaces we can know more info about the BaseState?
+	//TODO: Perhaps with interfaces we can know more info about the BaseState for use for AI?
 
 	UFUNCTION(BlueprintPure)
 	FVector GetRootSomething();
@@ -121,10 +126,12 @@ public: //Public Variables
 	FVector RootSomething;
 	
 	//Values
-	TArray<EButtonInput> ButtonInputBufferArray; //List of the order of button inputs. Will be relevant for the command input thing
+	TArray<EButtonInput> ButtonInputBufferArray;
+	//List of the order of button inputs. Will be relevant for the command input thing, currently does nothing
 
 	UPROPERTY()
-	EButtonInput ButtonInputBuffer; //Last button input performed before buffer clears
+	EButtonInput ButtonInputBuffer;
+	//Last button input performed before buffer clears. Might be replaced by the Inputbuffer Array if we add Streetfighter style command inputs
 
 protected: //Protected Stuff
 	UPROPERTY()

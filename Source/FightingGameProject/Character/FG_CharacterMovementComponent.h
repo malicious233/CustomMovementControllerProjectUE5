@@ -13,6 +13,8 @@ class FIGHTINGGAMEPROJECT_API UFG_CharacterMovementComponent : public UActorComp
 {
 	GENERATED_BODY()
 
+	///Custom de-bloated character movement component
+
 public:
 	// Sets default values for this component's properties
 	UFG_CharacterMovementComponent();
@@ -36,6 +38,11 @@ public: //Public Functions
 
 	UFUNCTION(BlueprintPure)
 	bool IsGrounded();
+
+	DECLARE_DYNAMIC_MULTICAST_DELEGATE(FOnUsedSignature);
+
+	UPROPERTY(BlueprintAssignable)
+	FOnUsedSignature OnJump;
 
 	//Character Functions
 

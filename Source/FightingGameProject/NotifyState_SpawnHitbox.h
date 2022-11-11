@@ -14,7 +14,9 @@ class FIGHTINGGAMEPROJECT_API UNotifyState_SpawnHitbox : public UAnimNotifyState
 {
 	GENERATED_BODY()
 public:
-
+	/**
+	 * @brief WIP Class! Dont use yet
+	 */
 	UNotifyState_SpawnHitbox();
 	
 	UPROPERTY()

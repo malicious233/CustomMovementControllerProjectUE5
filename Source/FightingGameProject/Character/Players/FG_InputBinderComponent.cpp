@@ -3,6 +3,10 @@
 
 #include "FG_InputBinderComponent.h"
 
+
+/**
+ * @brief This component is not used anymore. A similar behavior now just exists in the FG_BaseCharacter
+ */
 UFG_InputBinderComponent::UFG_InputBinderComponent()
 {
 	//Note for future self, be a bit wary of getting references for components in constructors, the order of how things happen is a bit mysterious.

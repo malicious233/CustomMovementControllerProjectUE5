@@ -8,7 +8,8 @@
 #include "FG_Action.generated.h"
 
 /**
- * 
+ * Object which stores a function pointer and a button input.
+ * Used in FG_BaseCharacter as essentially an inputbinding wrapper to work with input buffering actions
  */
 UCLASS()
 class FIGHTINGGAMEPROJECT_API UFG_Action : public UObject

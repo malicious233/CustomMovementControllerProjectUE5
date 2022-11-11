@@ -12,5 +12,6 @@
 UCLASS()
 class FIGHTINGGAMEPROJECT_API UFG_Action_Punch : public UObject
 {
+	//I dont do anything yet!
 	GENERATED_BODY()
 };
