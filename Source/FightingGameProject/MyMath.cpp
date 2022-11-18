@@ -1,6 +1,6 @@
 ﻿#include "MyMath.h"
 
-FVector FMyMath::MoveTowards(const FVector Current, const FVector Target, const float MaxDistanceDelta)
+FVector UMyMath::MoveTowards(const FVector Current, const FVector Target, const float MaxDistanceDelta)
 {
 	FVector a = Target - Current;
 	const float magnitude = a.Length();
@@ -11,13 +11,13 @@ FVector FMyMath::MoveTowards(const FVector Current, const FVector Target, const 
 	return Current + a / magnitude * MaxDistanceDelta;
 }
 
-FVector FMyMath::ZeroZVector(FVector Target)
+FVector UMyMath::ZeroZVector(FVector Target)
 {
 	Target.Z = 0;
 	return Target;
 }
 
-FVector FMyMath::ZeroZNormalizedVector(FVector Target)
+FVector UMyMath::ZeroZNormalizedVector(FVector Target)
 {
 	Target.Z = 0;
 	Target.Normalize();

@@ -136,7 +136,7 @@ void UFG_CharacterMovementComponent::Walk(FVector Direction, const float Acceler
 	Direction.Normalize();
 
 	FVector AccelToAdd = Direction * Acceleration;
-	FVector GroundVelocity = FMyMath::ZeroZVector(GetVelocity());
+	FVector GroundVelocity = UMyMath::ZeroZVector(GetVelocity());
 
 	float AccelGroundDot = FVector::DotProduct(AccelToAdd, GroundVelocity.GetSafeNormal());
 	if (AccelGroundDot <= 0)
@@ -181,7 +181,7 @@ void UFG_CharacterMovementComponent::HandleWalk(float Axis)
 
 void UFG_CharacterMovementComponent::RotateCharacter(FVector Direction, const float RotationSpeed)
 {
-	Direction = FMyMath::ZeroZVector(Direction);
+	Direction = UMyMath::ZeroZVector(Direction);
 	Direction.Normalize();
 	
 	FRotator OldRot = GetOwner()->GetActorRotation();
@@ -221,8 +221,8 @@ void UFG_CharacterMovementComponent::ApplyGravity()
 
 void UFG_CharacterMovementComponent::ApplyFriction()
 {
-	FVector GroundVelocity = FMyMath::ZeroZVector(Velocity);
-	FVector DeaccelVector = FMyMath::MoveTowards(GroundVelocity, FVector::Zero(), Friction * GetWorld()->DeltaTimeSeconds);
+	FVector GroundVelocity = UMyMath::ZeroZVector(Velocity);
+	FVector DeaccelVector = UMyMath::MoveTowards(GroundVelocity, FVector::Zero(), Friction * GetWorld()->DeltaTimeSeconds);
 	DeaccelVector.Z = Velocity.Z;
 
 	Velocity = DeaccelVector;

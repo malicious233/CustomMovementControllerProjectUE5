@@ -1,9 +1,14 @@
 ﻿#pragma once
 
 #include "HAL/PlatformMath.h"
+#include "MyMath.generated.h"
 
-struct FMyMath : public FPlatformMath
+UCLASS()
+class UMyMath : public UBlueprintFunctionLibrary
 {
+	GENERATED_BODY()
+
+public:
 	//Alfons's personal little math library
 
 	/**
@@ -13,6 +18,7 @@ struct FMyMath : public FPlatformMath
 	 * @param MaxDistanceDelta 
 	 * @return 
 	 */
+	UFUNCTION(BlueprintCallable)
 	static FVector MoveTowards(const FVector Current, const FVector Target, const float MaxDistanceDelta);
 
 	/**
@@ -20,6 +26,7 @@ struct FMyMath : public FPlatformMath
 	 * @param Target 
 	 * @return 
 	 */
+	UFUNCTION(BlueprintCallable)
 	static FVector ZeroZVector(FVector Target);
 	
 	/**
@@ -27,5 +34,6 @@ struct FMyMath : public FPlatformMath
 	 * @param Target 
 	 * @return 
 	 */
+	UFUNCTION(BlueprintCallable)
 	static FVector ZeroZNormalizedVector(FVector Target);
 };
