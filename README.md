@@ -11,6 +11,6 @@ This behavior exists on the FG_BaseCharacter itself which means that if a player
 
 -The custom movement component called FG_CharacterMovementComponent comes with custom collision done by sweeping, a velocity-based movement model with friction, acceleration, rotation, max-speed, etc, and smooth stair-stepping/object clearance.
 
--The animations is done entirely through an animation blueprint which reads values from FG_gasmaskguy and listens to events to play montages. The animator blueprint has walking, jumping, additive-landing animations, Inverse Kinematics for the legs and additive blendspaces for leaning the character spine when accelerating or turning
+-The animation logic is done entirely through an animation blueprint which reads values from FG_gasmaskguy and listens to events to play montages. The animator blueprint has walking, jumping, additive-landing animations, Inverse Kinematics for the legs and additive blendspaces for leaning the character spine when accelerating or turning
 
-
+-The model and animations are made by me with Blender
