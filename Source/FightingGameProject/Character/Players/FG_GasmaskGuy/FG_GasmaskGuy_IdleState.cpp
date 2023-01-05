@@ -23,7 +23,7 @@ void UFG_GasmaskGuy_IdleState::Enter_Implementation()
 	//TODO: Do that you have an array of actions which automatically gets registered so that you can configure in the editor
 	//TODO: Do that this is done once and cached instead of being called every time on Enter. This being called after the BaseState implementation is also causing some issues.
 	//TODO: See if you can make this be nicely blueprintable.
-	RegisterButtonAction<UFG_CharacterMovementComponent>(EButtonInput::JUMP, GetOwner()->MoveComp, &UFG_CharacterMovementComponent::Jump); //This for example registers with the jump button input the jump function from the move component.
+	RegisterButtonAction<UFG_CharacterMovementComponent>(EButtonInput::JUMP, GetOwner()->MoveComp, &UFG_CharacterMovementComponent::Jump); //This for example registers with the jump button input the jump function from the move component to work with input buffering.
 	
 }
 
@@ -38,12 +38,12 @@ void UFG_GasmaskGuy_IdleState::Tick_Implementation(float DeltaTime)
 	}
 
 	//Rotate
-	if (GetOwner()->GetCameraInputVector().Rotation() != FRotator::ZeroRotator)
+	if (G->GetCameraInputVector().Rotation() != FRotator::ZeroRotator && G->MoveComp->GetVelocity().SquaredLength() > 200) 
 	{
-		GetOwner()->MoveComp->RotateCharacter(GetOwner()->MoveComp->GetVelocity().GetSafeNormal(), 30 * DeltaTime);
+		G->MoveComp->RotateCharacter(G->MoveComp->GetVelocity().GetSafeNormal(), 15 * DeltaTime); //rotation speed is a magic number for now
 	}
 	
 	//Add move force
-	GetOwner()->MoveComp->Walk(GetOwner()->GetCameraInputVector(), GetOwner()->WalkSpeed, GetOwner()->MaxWalkSpeed);
+	G->MoveComp->Walk(GetOwner()->GetCameraInputVector(), GetOwner()->WalkSpeed, GetOwner()->MaxWalkSpeed);
 	
 }

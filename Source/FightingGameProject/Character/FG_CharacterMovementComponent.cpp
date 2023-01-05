@@ -121,7 +121,7 @@ void UFG_CharacterMovementComponent::AddImpulse(const FVector& Impulse)
 {
 	if (Impulse.Z != 0)
 	{
-		FloatingDetectionDisabledTimer = 0.1;
+		FloatingDetectionDisabledTimer = 0.1; //The capsule collider floating mechanism would otherwise snap you back into position if the impulse wasn't strong enough.
 	}
 	Velocity += Impulse;
 }
@@ -148,12 +148,12 @@ void UFG_CharacterMovementComponent::Walk(FVector Direction, const float Acceler
 	//I still wish I had a better name for this value
 	FVector AccelFactor = AccelGroundDot * GroundVelocity.GetSafeNormal();
 
+//When moving too fast, it will subtract the correct amount to not overshoot the MaxWalkSpeed
 	if (GroundVelocity.Size() > MaxWalkSpeed)
 	{
-		//When moving too fast, it will subtract the correct amount to not overshoot the MaxWalkSpeed
 		AccelToAdd = AccelToAdd - AccelFactor;
 	}
-
+	
 	//Projects the acceltoAdd onto the current plane to more smoothly follow along surfaces
 	FHitResult Hit;
 	FVector SweepVector = ColliderRef->GetComponentLocation() + FVector::DownVector * 0.5f;
@@ -168,9 +168,11 @@ void UFG_CharacterMovementComponent::Walk(FVector Direction, const float Acceler
 	{
 		AccelToAdd = AccelToAdd.VectorPlaneProject(AccelToAdd, Hit.Normal);
 	}
-	
 
 	AddForce(AccelToAdd);
+	
+
+	
 }
 
 void UFG_CharacterMovementComponent::HandleWalk(float Axis)
